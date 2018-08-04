@@ -4,62 +4,85 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Popis artikala</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj novi artikl", "Create")
 </p>
 <table class="table table-hover">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
+        <th width="25%">
+            Ime artikla
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.amount)
+        <th width="10%">
+            <div class="pull-right">
+                Količina
+            </div>
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.price)
+        <th width="10%">
+            <div class="pull-right">
+                Cijena
+            </div>
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.sumvalue)
+        <th width="15%">
+            <div class="pull-right">
+                Ukupna cijena
+            </div>
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tax)
+        <th width="10%">
+            <div class="pull-right">
+                Porez
+            </div>
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.firm.name)
+        <th width="20%">
+            <div class="pull-right">
+                Proizvođač
+            </div>
         </th>
-        <th></th>
+        <th width="10%"></th>
+        <th width="10%"></th>
     </tr>
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.sumvalue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.firm.name)
-        </td>
-        <td>
-            <a class="editajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-edit"></i></a>
-        </td>
-        <td>
-            <a class="deleteajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-trash trash-can" ></i></a>
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                <div class="pull-right">
+                    @Html.DisplayFor(modelItem => item.amount)
+                </div>
+            </td>
+            <td>
+                <div class="pull-right">
+                    @Html.DisplayFor(modelItem => item.price)
+                </div>
+            </td>
+            <td>
+                <div class="pull-right">
+                    @Html.DisplayFor(modelItem => item.sumvalue)
+                </div>
+            </td>
+            <td>
+                <div class="pull-right">
+                    @Html.DisplayFor(modelItem => item.tax)
+                </div>
+            </td>
+            <td>
+                <div class="pull-right">
+                    @Html.DisplayFor(modelItem => item.firm.name)
+                </div>
+            </td>
+            <td>
+                <div class="pull-right">
+                    <a class="editajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-edit"></i></a>
+                </div>
+            </td>
+            <td>
+                <a class="deleteajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-trash trash-can"></i></a>
+            </td>
+        </tr>
     }
 
 </table>

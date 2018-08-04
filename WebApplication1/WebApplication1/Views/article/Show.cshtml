@@ -5,22 +5,35 @@
     @Model.name
 </td>
 <td>
-    @Model.amount
+    <div class="pull-right">
+        @Model.amount
+    </div>
 </td>
 <td>
-    @Model.price
+    <div class="pull-right">
+        @Model.price
+    </div>
 </td>
 <td>
-    @Model.sumvalue
+    <div class="pull-right">
+        @Model.sumvalue
+    </div>
 </td>
 <td>
-    @Model.tax
+    <div class="pull-right">
+        @Model.tax
+    </div>
 </td>
 <td>
-    @Model.firm.name
+    <div class="pull-right">
+        @Model.firm.name
+    </div>
 </td>
 <td>
-    <a class="editajax" href="#" data-sifartikla="@Model.id"><i class="glyphicon glyphicon-edit"></i></a>
+    <a class="editajax pull-right" href="#" data-sifartikla="@Model.id"><i class="glyphicon glyphicon-edit"></i></a>
+</td>
+<td>
+    <a class="deleteajax" href="" data-sifartikla="@Model.id"><i class="glyphicon glyphicon-trash trash-can"></i></a>
 </td>
 
 @section scripts{

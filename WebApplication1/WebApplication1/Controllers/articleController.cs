@@ -56,7 +56,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,firm_id,name,amount,price,sumvalue,tax")] article article)
+        public ActionResult Create([Bind(Include = "id,firm_id,name,amount,price,tax")] article article)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.firm_id = new SelectList(db.firm, "id", "name", article.firm_id);
+            ViewBag.firm_id = new SelectList(_firmService.GetAll(), "id", "name");
             return View(article);
         }
 
@@ -165,6 +165,22 @@ namespace WebApplication1.Controllers
             article article = _articleService.FindById(id);
             _articleService.Delete(article);
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult DeleteAjax(int id)
+        {
+            var result = new { Successful = true, ErrorMessage = string.Empty };
+            try
+            {
+                article article = _articleService.FindById(id);
+                _articleService.Delete(article);
+            }
+            catch (Exception exc)
+            {
+                result = new { Successful = false, ErrorMessage = exc.Message };
+            }
+            return Json(result);
         }
     }
 }
