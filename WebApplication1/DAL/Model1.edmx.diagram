@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="25be9c81b239499db4d183523c6d6712" Name="Diagram1">
+        <EntityTypeShape EntityType="DUCANModel.bill" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DUCANModel.user" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="DUCANModel.FK_bill_user" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DUCANModel.firm" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="DUCANModel.article" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="DUCANModel.FK_article_firm" />
+        <AssociationConnector Association="DUCANModel.FK_bill_article" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

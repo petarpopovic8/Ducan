@@ -1,0 +1,38 @@
+﻿@model WebApplication1.Models.ArticleViewModel
+
+
+<td>
+    @Model.name
+</td>
+<td>
+    @Model.amount
+</td>
+<td>
+    @Model.price
+</td>
+<td>
+    @Model.sumvalue
+</td>
+<td>
+    @Model.tax
+</td>
+<td>
+    @Model.firm.name
+</td>
+<td>
+    <a class="editajax" href="#" data-sifartikla="@Model.id"><i class="glyphicon glyphicon-edit"></i></a>
+</td>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $(".editajax").each(function () {
+                SetEditAjax($(this), '@Url.Action("EditAjax")');
+            });
+
+            $(".deleteajax").each(function () {
+                SetDeleteAjax($(this), '@Url.Action("DeleteAjax")');
+            });
+        });
+    </script>
+}

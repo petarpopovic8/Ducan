@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebApplication1.Models.ArticleViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sumvalue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.firm.name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sumvalue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.firm.name)
+        </td>
+        <td>
+            <a class="editajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-edit"></i></a>
+        </td>
+        <td>
+            <a class="deleteajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-trash trash-can" ></i></a>
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $(".editajax").each(function () {
+                SetEditAjax($(this), '@Url.Action("EditAjax")');
+            });
+
+            $(".deleteajax").each(function () {
+                SetDeleteAjax($(this), '@Url.Action("DeleteAjax")');
+            });
+        });
+    </script>
+}
