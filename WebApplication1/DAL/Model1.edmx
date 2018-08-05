@@ -39,6 +39,13 @@
           <Property Name="since" Type="int" />
           <Property Name="email" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="id" />
@@ -46,7 +53,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="full_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="role" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="role" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_article_firm">
           <End Role="firm" Type="Self.firm" Multiplicity="1" />
@@ -84,10 +91,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_user_role">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DUCANModelStoreContainer">
           <EntitySet Name="article" EntityType="Self.article" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bill" EntityType="Self.bill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="firm" EntityType="Self.firm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_article_firm" Association="Self.FK_article_firm">
             <End Role="firm" EntitySet="firm" />
@@ -100,6 +120,10 @@
           <AssociationSet Name="FK_bill_user" Association="Self.FK_bill_user">
             <End Role="user" EntitySet="user" />
             <End Role="bill" EntitySet="bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -115,38 +139,11 @@
           <Property Name="article_id" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Int16" Nullable="false" />
           <Property Name="num" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK_bill_user" FromRole="bill" ToRole="user" />
           <NavigationProperty Name="article" Relationship="DUCANModel.FK_bill_article" FromRole="bill" ToRole="article" />
+          <NavigationProperty Name="user" Relationship="DUCANModel.FK_bill_user" FromRole="bill" ToRole="user" />
         </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="full_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="role" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="bill" Relationship="Self.FK_bill_user" FromRole="user" ToRole="bill" />
-        </EntityType>
-        <Association Name="FK_bill_user">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="bill" Type="Self.bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bill">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DUCANEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="bill" EntityType="Self.bill" />
-          <EntitySet Name="user" EntityType="Self.user" />
-          <AssociationSet Name="FK_bill_user" Association="Self.FK_bill_user">
-            <End Role="user" EntitySet="user" />
-            <End Role="bill" EntitySet="bill" />
-          </AssociationSet>
           <EntitySet Name="firm" EntityType="DUCANModel.firm" />
           <EntitySet Name="article" EntityType="DUCANModel.article" />
           <AssociationSet Name="FK_article_firm" Association="DUCANModel.FK_article_firm">
@@ -156,6 +153,16 @@
           <AssociationSet Name="FK_bill_article" Association="DUCANModel.FK_bill_article">
             <End Role="article" EntitySet="article" />
             <End Role="bill" EntitySet="bill" />
+          </AssociationSet>
+          <EntitySet Name="role" EntityType="DUCANModel.role" />
+          <EntitySet Name="user" EntityType="DUCANModel.user" />
+          <AssociationSet Name="FK_bill_user" Association="DUCANModel.FK_bill_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="bill" EntitySet="bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="DUCANModel.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="firm">
@@ -209,6 +216,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="DUCANModel.FK_user_role" FromRole="role" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="bill" Relationship="DUCANModel.FK_bill_user" FromRole="user" ToRole="bill" />
+          <NavigationProperty Name="role1" Relationship="DUCANModel.FK_user_role" FromRole="user" ToRole="role" />
+        </EntityType>
+        <Association Name="FK_bill_user">
+          <End Type="DUCANModel.user" Role="user" Multiplicity="1" />
+          <End Type="DUCANModel.bill" Role="bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bill">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Type="DUCANModel.role" Role="role" Multiplicity="1" />
+          <End Type="DUCANModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -223,16 +273,6 @@
                 <ScalarProperty Name="article_id" ColumnName="article_id" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="num" ColumnName="num" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="user">
-            <EntityTypeMapping TypeName="DUCANModel.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="full_name" ColumnName="full_name" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="role" ColumnName="role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -258,6 +298,24 @@
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="firm_id" ColumnName="firm_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="DUCANModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="DUCANModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -12,6 +12,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     public class articleController : Controller
     {
         private ArticleService _articleService;
@@ -23,10 +24,16 @@ namespace WebApplication1.Controllers
             _firmService = new FirmService();
         }
         // GET: article
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
             var articles = _articleService.GetAll().Select(x => new ArticleViewModel(x));
-            return View(articles);
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.FirmSortParm = sortOrder == "firm" ? "firm_desc" : "firm";
+            ViewBag.AmountSortParm = sortOrder == "amount" ? "amount_desc" : "amount";
+            ViewBag.PriceSortParm = sortOrder == "price" ? "price_desc" : "price";
+
+            return View(_articleService.GetSorted(sortOrder).Select(x => new ArticleViewModel(x)));
         }
 
         // GET: article/Details/5

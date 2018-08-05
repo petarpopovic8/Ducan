@@ -6,12 +6,14 @@
     <edmx:Diagrams>
       <Diagram DiagramId="25be9c81b239499db4d183523c6d6712" Name="Diagram1">
         <EntityTypeShape EntityType="DUCANModel.bill" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DUCANModel.user" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
-        <AssociationConnector Association="DUCANModel.FK_bill_user" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DUCANModel.firm" Width="1.5" PointX="0.75" PointY="1.5" />
         <EntityTypeShape EntityType="DUCANModel.article" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="DUCANModel.FK_article_firm" />
         <AssociationConnector Association="DUCANModel.FK_bill_article" />
+        <EntityTypeShape EntityType="DUCANModel.role" Width="1.5" PointX="3.375" PointY="5.25" />
+        <EntityTypeShape EntityType="DUCANModel.user" Width="1.5" PointX="5.625" PointY="4.875" />
+        <AssociationConnector Association="DUCANModel.FK_bill_user" />
+        <AssociationConnector Association="DUCANModel.FK_user_role" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

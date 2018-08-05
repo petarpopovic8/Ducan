@@ -23,9 +23,10 @@ namespace DAL
         public int id { get; set; }
         public string full_name { get; set; }
         public string password { get; set; }
-        public string role { get; set; }
+        public int role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bill> bill { get; set; }
+        public virtual role role1 { get; set; }
     }
 }

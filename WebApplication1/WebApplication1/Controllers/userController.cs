@@ -6,7 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Web.Security;
 using DAL;
+using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using ServiceLayer;
 
 namespace WebApplication1.Controllers
@@ -117,6 +120,30 @@ namespace WebApplication1.Controllers
             user user = _userService.FindById(id);
             _userService.Delete(user); 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(user user)
+        {
+            var authenticatedUser = _userService.Login(user);
+            if (authenticatedUser != null)
+            {
+                new SessionContext().SetAuthenticationToken(authenticatedUser.full_name, false, authenticatedUser);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

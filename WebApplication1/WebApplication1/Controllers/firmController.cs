@@ -11,6 +11,7 @@ using ServiceLayer;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     public class firmController : Controller
     {
         private FirmService _firmService;
@@ -23,7 +24,7 @@ namespace WebApplication1.Controllers
         // GET: firm
         public ActionResult Index()
         {
-            return View(_firmService.GetAll().ToList());
+            return View(_firmService.GetAll().OrderBy(x => x.name));
         }
 
         // GET: firm/Create

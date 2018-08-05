@@ -46,6 +46,33 @@ namespace ServiceLayer
             _unitOfWork.ArticleRepository.Delete(article);
             _unitOfWork.Save();
         }
+
+        public IEnumerable<article> GetSorted(string sort)
+        {
+            switch (sort)
+            {
+                case "name":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderBy(d => d.name));
+                case "name_desc":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderByDescending(d => d.name));
+                case "firm":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderBy(d => d.firm.name));
+                case "firm_desc":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderByDescending(d => d.firm.name));
+                case "amount":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderBy(d => d.amount));
+                case "amount_desc":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderByDescending(d => d.amount));
+                case "price":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderBy(d => d.price));
+                case "price_desc":
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderByDescending(d => d.price));
+                default:
+                    return _unitOfWork.ArticleRepository.Get(orderBy: q => q.OrderBy(d => d.name));
+
+            }
+            return null;
+        }
     }
 }
 

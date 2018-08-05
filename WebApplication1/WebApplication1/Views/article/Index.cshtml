@@ -3,25 +3,31 @@
 @{
     ViewBag.Title = "Index";
 }
+<div style="margin-top: 3%">
+    <div style="width:88%; display:inline-block">
+        <h2>Popis artikala</h2>
+    </div>
+    <div style="width:12%; display:inline-block; margin-top: 2%;" class="pull-right">
+        @Html.ActionLink("Dodaj novi artikl", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
 
-<h2>Popis artikala</h2>
+<div style="height: 14px;">
+</div>
 
-<p>
-    @Html.ActionLink("Dodaj novi artikl", "Create")
-</p>
 <table class="table table-hover">
     <tr>
         <th width="25%">
-            Ime artikla
+            @Html.ActionLink("Ime artikla", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th width="10%">
             <div class="pull-right">
-                Količina
+                @Html.ActionLink("Količina", "Index", new { sortOrder = ViewBag.AmountSortParm })
             </div>
         </th>
         <th width="10%">
             <div class="pull-right">
-                Cijena
+                @Html.ActionLink("Cijena", "Index", new { sortOrder = ViewBag.PriceSortParm })
             </div>
         </th>
         <th width="15%">
@@ -36,7 +42,7 @@
         </th>
         <th width="20%">
             <div class="pull-right">
-                Proizvođač
+                @Html.ActionLink("Proizvođač", "Index", new { sortOrder = ViewBag.FirmSortParm })
             </div>
         </th>
         <th width="10%"></th>
@@ -76,11 +82,11 @@
             </td>
             <td>
                 <div class="pull-right">
-                    <a class="editajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a class="editajax btn btn-default btn-sm" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-edit"></i></a>
                 </div>
             </td>
             <td>
-                <a class="deleteajax" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-trash trash-can"></i></a>
+                <a class="deleteajax btn btn-danger btn-sm" href="" data-sifartikla="@item.id"><i class="glyphicon glyphicon-trash" style="color:white"></i></a>
             </td>
         </tr>
     }

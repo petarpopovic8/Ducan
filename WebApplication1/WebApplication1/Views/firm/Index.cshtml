@@ -4,31 +4,35 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div style="margin-top: 3%">
+    <div style="width:92%; display:inline-block">
+        <h2>Partnerske firme</h2>
+    </div>
+    <div style="width:8%; display:inline-block; margin-top: 2%;" class="pull-right">
+        @Html.ActionLink("Dodaj firmu", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
 <table class="table table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            Ime
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OIB)
+            OIB
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.phone)
+            Telefon
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.adress)
+            Adresa
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.since)
+            Godina osnivanja
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            E-mail
         </th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -42,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.OIB)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.phone)
+                <a href="tel:@item.phone">@item.phone</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.adress)
@@ -50,12 +54,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.since)
             </td>
-            <td>    
+            <td>
                 <a href="mailto:@item.email">@item.email</a>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                <div class="pull-right">
+                    <a href="/firm/Edit/@item.id"><i class="glyphicon glyphicon-edit"></i></a>
+                </div>
+            </td>
+            <td>
+                <a href="/firm/Delete/@item.id"><i class="glyphicon glyphicon-trash trash-can"></i></a>
             </td>
         </tr>
     }

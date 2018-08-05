@@ -12,15 +12,18 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class bill
+    public partial class role
     {
-        public int id { get; set; }
-        public int user_id { get; set; }
-        public int article_id { get; set; }
-        public short amount { get; set; }
-        public int num { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public role()
+        {
+            this.user = new HashSet<user>();
+        }
     
-        public virtual article article { get; set; }
-        public virtual user user { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<user> user { get; set; }
     }
 }
