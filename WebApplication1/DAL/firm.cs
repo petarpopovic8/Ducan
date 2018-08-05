@@ -23,6 +23,10 @@ namespace DAL
         public int id { get; set; }
         public string name { get; set; }
         public long OIB { get; set; }
+        public string phone { get; set; }
+        public string adress { get; set; }
+        public Nullable<int> since { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<article> article { get; set; }

@@ -34,6 +34,10 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OIB" Type="bigint" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="adress" Type="nvarchar" MaxLength="150" />
+          <Property Name="since" Type="int" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -162,6 +166,10 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OIB" Type="Int64" Nullable="false" />
           <NavigationProperty Name="article" Relationship="DUCANModel.FK_article_firm" FromRole="firm" ToRole="article" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="since" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="article">
           <Key>
@@ -231,6 +239,10 @@
           <EntitySetMapping Name="firm">
             <EntityTypeMapping TypeName="DUCANModel.firm">
               <MappingFragment StoreEntitySet="firm">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="since" ColumnName="since" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="OIB" ColumnName="OIB" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />

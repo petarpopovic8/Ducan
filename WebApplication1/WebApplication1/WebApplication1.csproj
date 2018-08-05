@@ -155,6 +155,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\articleController.cs" />
     <Compile Include="Controllers\billController.cs" />
+    <Compile Include="Controllers\firmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\userController.cs" />
     <Compile Include="Global.asax.cs">
@@ -219,6 +220,11 @@
     <Content Include="Views\user\Index.cshtml" />
     <Content Include="Views\article\EditAjax.cshtml" />
     <Content Include="Views\article\Show.cshtml" />
+    <Content Include="Views\firm\Create.cshtml" />
+    <Content Include="Views\firm\Delete.cshtml" />
+    <Content Include="Views\firm\Details.cshtml" />
+    <Content Include="Views\firm\Edit.cshtml" />
+    <Content Include="Views\firm\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
