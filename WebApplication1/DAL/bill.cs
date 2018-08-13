@@ -14,13 +14,18 @@ namespace DAL
     
     public partial class bill
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public bill()
+        {
+            this.bill_article = new HashSet<bill_article>();
+        }
+    
         public int id { get; set; }
         public int user_id { get; set; }
-        public int article_id { get; set; }
-        public short amount { get; set; }
         public int num { get; set; }
     
-        public virtual article article { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<bill_article> bill_article { get; set; }
         public virtual user user { get; set; }
     }
 }

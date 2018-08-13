@@ -25,8 +25,8 @@ namespace DAL
         public string password { get; set; }
         public int role { get; set; }
     
+        public virtual role role1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bill> bill { get; set; }
-        public virtual role role1 { get; set; }
     }
 }

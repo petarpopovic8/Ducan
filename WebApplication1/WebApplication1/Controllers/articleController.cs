@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DAL;
 using ServiceLayer;
 using WebApplication1.Models;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
@@ -24,16 +25,21 @@ namespace WebApplication1.Controllers
             _firmService = new FirmService();
         }
         // GET: article
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, int? page)
         {
             var articles = _articleService.GetAll().Select(x => new ArticleViewModel(x));
 
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.FirmSortParm = sortOrder == "firm" ? "firm_desc" : "firm";
             ViewBag.AmountSortParm = sortOrder == "amount" ? "amount_desc" : "amount";
             ViewBag.PriceSortParm = sortOrder == "price" ? "price_desc" : "price";
 
-            return View(_articleService.GetSorted(sortOrder).Select(x => new ArticleViewModel(x)));
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            //return View(students.ToPagedList(pageNumber, pageSize));  OBRISI AKO RADI
+
+            return View(_articleService.GetSorted(sortOrder).Select(x => new ArticleViewModel(x)).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: article/Details/5

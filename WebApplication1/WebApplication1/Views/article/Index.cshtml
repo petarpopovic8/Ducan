@@ -1,7 +1,9 @@
-﻿@model IEnumerable<WebApplication1.Models.ArticleViewModel>
+﻿@model PagedList.IPagedList<WebApplication1.Models.ArticleViewModel>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Articles";
 }
 <div style="margin-top: 3%">
     <div style="width:88%; display:inline-block">
@@ -93,6 +95,12 @@
 
 </table>
 
+<br />
+Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort}))
+
 @section scripts{
     <script type="text/javascript">
         $(function () {
@@ -106,3 +114,4 @@
         });
     </script>
 }
+

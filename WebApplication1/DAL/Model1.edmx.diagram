@@ -5,16 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="25be9c81b239499db4d183523c6d6712" Name="Diagram1">
-        <EntityTypeShape EntityType="DUCANModel.bill" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="DUCANModel.firm" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="DUCANModel.article" Width="1.5" PointX="3" PointY="1" />
-        <AssociationConnector Association="DUCANModel.FK_article_firm" />
-        <AssociationConnector Association="DUCANModel.FK_bill_article" />
-        <EntityTypeShape EntityType="DUCANModel.role" Width="1.5" PointX="3.375" PointY="5.25" />
-        <EntityTypeShape EntityType="DUCANModel.user" Width="1.5" PointX="5.625" PointY="4.875" />
-        <AssociationConnector Association="DUCANModel.FK_bill_user" />
+        <EntityTypeShape EntityType="DUCANModel.role" Width="1.5" PointX="2.75" PointY="5.25" />
+        <EntityTypeShape EntityType="DUCANModel.user" Width="1.5" PointX="5.5" PointY="4.875" />
         <AssociationConnector Association="DUCANModel.FK_user_role" />
-      </Diagram>
+        <EntityTypeShape EntityType="DUCANModel.article" Width="1.5" PointX="3" PointY="1.375" />
+        <AssociationConnector Association="DUCANModel.FK_article_firm" />
+        <EntityTypeShape EntityType="DUCANModel.bill" Width="1.5" PointX="8.75" PointY="2.25" />
+        <EntityTypeShape EntityType="DUCANModel.bill_article" Width="1.5" PointX="5.75" PointY="1.875" />
+        <AssociationConnector Association="DUCANModel.FK_bill_article_article" />
+        <AssociationConnector Association="DUCANModel.FK_bill_article_bill" />
+        <AssociationConnector Association="DUCANModel.FK_bill_user" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

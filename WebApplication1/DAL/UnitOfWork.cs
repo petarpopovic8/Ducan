@@ -51,6 +51,7 @@ namespace DAL
                 }
                 return articleRepository;
             }
+
         }
 
         public GenericRepository<bill> BillRepository
@@ -64,6 +65,8 @@ namespace DAL
                 }
                 return billRepository;
             }
+
+          
         }
 
         public void Save()

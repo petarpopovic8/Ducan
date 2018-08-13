@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DAL;
 using ServiceLayer;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -23,8 +24,8 @@ namespace WebApplication1.Controllers
         // GET: bill
         public ActionResult Index()
         {
-            var bill = _billService.GetAll();
-            return View(bill.ToList());
+            var bill = _billService.GetAll().ToList();
+            return View(bill.Select(x => new BillViewModel(x)));
         }
 
         // GET: bill/Details/5

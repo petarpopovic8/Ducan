@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DAL.bill>
+﻿@model IEnumerable<WebApplication1.Models.BillViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -12,10 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.num)
+            Br. računa
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.user.full_name)
+            Blagajnik
+        </th>
+        <th>
+            Iznos
         </th>
         <th></th>
     </tr>
@@ -29,8 +32,11 @@
             @Html.DisplayFor(modelItem => item.user.full_name)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.DisplayFor(modelItem => item.sum)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.id })
         </td>
     </tr>
 }

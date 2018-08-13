@@ -20,7 +20,7 @@ namespace ServiceLayer
 
         public IEnumerable<bill> GetAll()
         {
-            return _unitOfWork.BillRepository.Get( filter : null, orderBy: null, includeProperties: "article,user");
+            return _unitOfWork.BillRepository.Get( filter : null, orderBy: null, includeProperties: "bill_article.article,user");
         }
 
         public IEnumerable<bill> GetByNum(int num)

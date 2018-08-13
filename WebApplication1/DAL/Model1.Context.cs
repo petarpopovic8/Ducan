@@ -25,10 +25,11 @@ namespace DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<bill> bill { get; set; }
         public virtual DbSet<firm> firm { get; set; }
-        public virtual DbSet<article> article { get; set; }
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<article> article { get; set; }
+        public virtual DbSet<bill> bill { get; set; }
+        public virtual DbSet<bill_article> bill_article { get; set; }
     }
 }

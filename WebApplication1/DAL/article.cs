@@ -17,7 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public article()
         {
-            this.bill = new HashSet<bill>();
+            this.bill_article = new HashSet<bill_article>();
         }
     
         public int id { get; set; }
@@ -30,6 +30,6 @@ namespace DAL
     
         public virtual firm firm { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<bill> bill { get; set; }
+        public virtual ICollection<bill_article> bill_article { get; set; }
     }
 }
