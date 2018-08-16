@@ -1,64 +1,171 @@
-﻿@model DAL.bill
+﻿
 
-@{
-    ViewBag.Title = "Create";
-}
-
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>bill</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.user_id, "user_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
+<div class="modal fade" id="newOrderModal">
+    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Dodaj novi račun</h4>
             </div>
-        </div>
+            <form id="NewOrderForm">
+                <div class="modal-body">
+                    @*Customer Details*@
+                    <h5 style="color:#ff6347">Opće informacije</h5>
+                    <hr />
+                    <div class="form-horizontal">
+                        <input type="hidden" id="CustomerId" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Br. računa
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" id="num" name="num" placeholder="Br. računa" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <div class="control-label col-md-2">
+                                    Prodavač
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control", placeholder = "Prodavač" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.article_id, "article_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("article_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.article_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    @*Order Details*@
+                    <h5 style="margin-top:10px;color:#ff6347">Detalji artikla</h5>
+                    <hr />
+                    <div class="form-horizontal">
+                        <input type="hidden" id="OrderId" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Ime artikla
+                            </label>
+                            <div class="col-md-4">
+                                @Html.DropDownList("id_article", null, htmlAttributes: new { @class = "form-control", placeholder = "Ime artikla" })
+                            </div>
+                            <label class="control-label col-md-2">
+                                Količina
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" id="amount" name="amount" placeholder="Količina" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2 col-lg-offset-4">
+                                <a id="addToList" class="btn btn-primary">Dodaj u listu</a>
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.num, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.num, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.num, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+                        <table id="detailsTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:30%">Artikl</th>
+                                    <th style="width:15%">Jed. Cijena</th>
+                                    <th style="width:15%">Količina</th>
+                                    <th style="width:15%">Porez</th>
+                                    <th style="width:15%">Iznos</th>
+                                    <th style="width:10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveOrder" type="submit" class="btn btn-danger">Save Order</button>
+                </div>
+            </form>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+@section scripts{
+    <script>
+        //Show Modal.
+        function addNewOrder() {
+            $("#newOrderModal").modal();
+        }
+        //Add Multiple Order.
+        $("#addToList").click(function (e) {
+            e.preventDefault();
+
+            if ($.trim($("#id_article").val()) == "" || $.trim($("#amount").val()) == "") return;
+
+            var id_article = $("#id_article").val(),
+                amount = $("#amount").val(),
+                detailsTableBody = $("#detailsTable tbody");
+
+            var articleItem = '<tr><td>' + id_article + '</td><td>' + price + '</td><td>' + amount + '</td><td>' + tax + '</td><td>' + (parseDouble(price) * parseDouble(amount) * (1 + parseDouble(tax))) + '</td><td><a data-itemId="0" href="#" class="deleteItem">Izbriši</a></td></tr>';
+            detailsTableBody.append(articleItem);
+            clearItem();
+        });
+        //After Add A New Order In The List, Clear Clean The Form For Add More Order.
+        function clearItem() {
+            $("#id_article").val('');
+            $("#amount").val('');
+        }
+
+
+        // After Add A New Order In The List, If You Want, You Can Remove It.
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-itemId') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        //After Click Save Button Pass All Data View To Controller For Save Database
+        function saveOrder(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "/bill/Create",
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!")
+                }
+            });
+        }
+        //Collect Multiple Order List For Pass To Controller
+        $("#saveOrder").click(function (e) {
+            e.preventDefault();
+
+            var orderArr = [];
+            orderArr.length = 0;
+
+            $.each($("#detailsTable tbody tr"), function () {
+                orderArr.push({
+                    id_article: $(this).find('td:eq(0)').html(),
+                    price: $(this).find('td:eq(1)').html(),
+                    amount: $(this).find('td:eq(2)').html(),
+                    sum: $(this).find('td:eq(3)').html()
+                });
+            });
+
+
+            var data = JSON.stringify({
+                num: $("#num").val(),
+                user_id: $("#user_id").val(),
+                order: orderArr
+            });
+
+            $.when(saveOrder(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+    </script>
 }
+
+

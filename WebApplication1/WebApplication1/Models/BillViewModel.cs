@@ -11,18 +11,22 @@ namespace WebApplication1.Models
         public int id { get; set; }
         public int num { get; set; }
         public user user { get; set; }
-        public double sum { get; set; }
+        public string sum { get; set; }
+        public IEnumerable<bill_article> bill_article { get; set; }
+        //public IEnumerable<article> articles { get; set; }
 
         public BillViewModel(bill bill)
         {
             id = bill.id;
             num = bill.num;
             user = bill.user;
-            sum = 0;
+            double suma = 0;
+            bill_article = bill.bill_article;
             foreach (var art in bill.bill_article)
             {
-                sum += art.article.price + art.amount;
+                suma += art.article.price * art.amount * (1 + art.article.tax);
             }
+            sum = suma.ToString("0.00");
         }
     }
 }

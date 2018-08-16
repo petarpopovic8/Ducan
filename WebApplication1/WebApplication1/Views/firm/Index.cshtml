@@ -1,4 +1,6 @@
-﻿@model IEnumerable<DAL.firm>
+﻿@model PagedList.IPagedList<DAL.firm>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -59,13 +61,18 @@
             </td>
             <td>
                 <div class="pull-right">
-                    <a href="/firm/Edit/@item.id"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a class="btn btn-default btn-sm" href="/firm/Edit?id=@item.id&page=@ViewBag.Page"><i class="glyphicon glyphicon-edit"></i></a>
                 </div>
             </td>
             <td>
-                <a href="/firm/Delete/@item.id"><i class="glyphicon glyphicon-trash trash-can"></i></a>
+                <a class="btn btn-danger btn-sm" href="/firm/Delete?id=@item.id&page=@ViewBag.Page"><i class="glyphicon glyphicon-trash" style="color:white"></i></a>
             </td>
         </tr>
     }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page }))

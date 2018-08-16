@@ -18,10 +18,16 @@ namespace ServiceLayer
         }
 
 
+
         public IEnumerable<bill> GetAll()
         {
             return _unitOfWork.BillRepository.Get( filter : null, orderBy: null, includeProperties: "bill_article.article,user");
         }
+
+       /* public IEnumerable<article> GetArticles()
+        {
+
+       } */
 
         public IEnumerable<bill> GetByNum(int num)
         {

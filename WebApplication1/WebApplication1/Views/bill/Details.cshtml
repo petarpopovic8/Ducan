@@ -1,50 +1,66 @@
-﻿@model DAL.bill
+﻿@model WebApplication1.Models.BillViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalji računa";
 }
-
-<h2>Details</h2>
+<div style="display:block; margin-top:3%">
+    <div style="display:inline-block">
+        <h3>Račun br. @Html.DisplayFor(model => model.num)</h3>
+    </div>
+    <div style="display:inline-block; float:right">
+        <h3>Blagajnik: @Html.DisplayFor(model => model.user.full_name)</h3>
+    </div>
+</div>
 
 <div>
-    <h4>bill</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.amount)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.amount)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.num)
-        </dt>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Naziv artikla
+            </th>
+            <th>
+                Jedinična cijena
+            </th>
+            <th>
+                Količina
+            </th>
+            <th>
+                Porez
+            </th>
+            <th>
+                Iznos
+            </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.num)
-        </dd>
+        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.article.name)
-        </dt>
+        @foreach (var item in Model.bill_article)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.article.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.article.price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.article.tax)
+                </td>
+                <td>
+                    @{var zbroj = (item.amount * item.article.price * (1 + item.article.tax)).ToString("0.00");}
+                    @zbroj
+                </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.article.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.user.full_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.user.full_name)
-        </dd>
-
-    </dl>
+            </tr>
+        }
+        <tr><td></td><td></td><td></td><td></td><td><b>@Html.DisplayFor(model => model.sum) kn</b></td></tr>
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div>
+    <a class="btn btn-default" href="@ViewBag.URL"><i class="glyphicon glyphicon-chevron-left" style="color:darkgrey"></i><i class="glyphicon glyphicon-chevron-left" style="color:darkgrey"></i></a>
+</div>

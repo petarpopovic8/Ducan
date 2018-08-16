@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DAL;
 using ServiceLayer;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
@@ -22,9 +23,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET: firm
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(_firmService.GetAll().OrderBy(x => x.name));
+            ViewBag.Page = page;
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(_firmService.GetAll().OrderBy(x => x.name).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: firm/Create
@@ -50,8 +54,9 @@ namespace WebApplication1.Controllers
         }
 
         // GET: firm/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int? page)
         {
+            ViewBag.Page = page;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,8 +85,9 @@ namespace WebApplication1.Controllers
         }
 
         // GET: firm/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int? page)
         {
+            ViewBag.Page = page;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

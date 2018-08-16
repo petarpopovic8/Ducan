@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
             if (userData != null)
                 data = new JavaScriptSerializer().Serialize(new SimpleUser(userData));
 
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, name, DateTime.Now, DateTime.Now.AddYears(1), isPersistant, userData.full_name);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, name, DateTime.Now, DateTime.Now.AddHours(10), isPersistant, userData.full_name);
 
             string cookieData = FormsAuthentication.Encrypt(ticket);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieData)
